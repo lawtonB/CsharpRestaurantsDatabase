@@ -43,7 +43,7 @@ namespace FavoriteRestaurants
     public void Test_Save_SavesToDatabase()
     {
       //Arrange
-      Restaurant testRestaurant = new Restaurant("Mow the lawn");
+      Restaurant testRestaurant = new Restaurant("Larrys Hoagies");
 
       //Act
       testRestaurant.Save();
@@ -52,6 +52,35 @@ namespace FavoriteRestaurants
 
       //Assert
       Assert.Equal(testList, result);
+    }
+    [Fact]
+    public void Test_Save_AssignsIdToObject()
+    {
+      //Arrange
+      Restaurant testRestaurant = new Restaurant("larrys Hoagies");
+
+      //Act
+      testRestaurant.Save();
+      Restaurant savedRestaurant = Restaurant.GetAll()[0];
+
+      int result = savedRestaurant.GetId();
+      int testId = testRestaurant.GetId();
+
+      //Assert
+      Assert.Equal(testId, result);
+    }
+    [Fact]
+    public void Test_Find_FindsRestaurantInDatabase()
+    {
+      //Arrange
+      Restaurant testRestaurant = new Restaurant("Larrys Hoagies");
+      testRestaurant.Save();
+
+      //Act
+      Restaurant foundRestaurant = Restaurant.Find(testRestaurant.GetId());
+
+      //Assert
+      Assert.Equal(testRestaurant, foundRestaurant);
     }
   }
 }
