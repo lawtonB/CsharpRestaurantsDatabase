@@ -1,0 +1,11 @@
+<h3>@Model.GetName()</h3>
+<br>
+<p>Enter your favorite @Model.GetName() restaurants!</p>
+
+<form class="restaurant" action="/add_eats" method="post">
+  <input type="hidden" name="cuisine_id" value="@Model.GetId()">
+  <input type="text" name="restaurant">
+  <button type="submit" name="button">add new restaurant</button>
+</form>
+
+<a href="/delete_all">Delete All Cuisines</a>

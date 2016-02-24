@@ -1,0 +1,6 @@
+<ul>
+  @foreach (var restaurant in cuisine.GetAll())
+  {
+  <option value="@restaurant.GetId()">@restaurant.GetName()</option>
+  }
+</ul>

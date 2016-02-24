@@ -56,10 +56,11 @@ namespace FavoriteRestaurants
       SqlCommand cmd = new SqlCommand("DELETE FROM restaurants;", conn);
       cmd.ExecuteNonQuery();
     }
+
     public void Save()
     {
       SqlConnection conn = DB.Connection();
-      SqlDataReader rdr;
+      SqlDataReader rdr = null;
       conn.Open();
 
       SqlCommand cmd = new SqlCommand("INSERT INTO restaurants (name, cuisine_id) OUTPUT INSERTED.id VALUES (@RestaurantName, @CuisineId);", conn);
