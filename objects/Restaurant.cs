@@ -10,7 +10,7 @@ namespace FavoriteRestaurants
     private string _name;
     private int _cuisineId;
 
-    public Restaurant(string Name, int Id = 0, int CuisineId = 0)
+    public Restaurant(string Name, int CuisineId, int Id = 0)
     {
       _id = Id;
       _name = Name;

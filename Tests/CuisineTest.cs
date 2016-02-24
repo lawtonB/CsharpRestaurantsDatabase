@@ -46,7 +46,7 @@ namespace FavoriteRestaurants
       List<Cuisine> testList = new List<Cuisine>{testCuisine};
 
       //Assert
-      Assert.Equal(testList, result);
+      Assert.Equal(testList[0].GetName(), result[0].GetName());
     }
 
     [Fact]
