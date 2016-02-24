@@ -1,0 +1,14 @@
+a form where user enters restaurant name and cuisine
+get restaurants from database based on cuisine, show it in a list
+user chooses favorite restaurants from a list based on cuisine
+
+---
+restaurant tests:
+test if database is empty
+test if we can put something inside of it
+test if we can delete all from database
+test if saves id to table
+test if Find method finds item based on cuisine_id
+test if user can update restaurant name (patch)
+
+cuisine tests:
