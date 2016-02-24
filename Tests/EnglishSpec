@@ -4,11 +4,12 @@ user chooses favorite restaurants from a list based on cuisine
 
 ---
 restaurant tests:
-test if database is empty
-test if we can put something inside of it
+test if database is empty x
+test if we can put something inside of it x
 test if we can delete all from database
-test if saves id to table
+test if saves id to table x
 test if Find method finds item based on cuisine_id
+test if Find method finds item based on restaurant_id x
 test if user can update restaurant name (patch)
 
 cuisine tests:
