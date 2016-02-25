@@ -79,6 +79,23 @@ namespace FavoriteRestaurants
       //Assert
       Assert.Equal(testCuisine, foundCuisine);
     }
+    [Fact]
+    public void Test_Update_UpdatesCuisineInDatabase()
+    {
+      //Arrange
+      string CuisineName = "Michael's";
+      Cuisine testCuisine = new Cuisine(CuisineName);
+      testCuisine.Save();
+      string newCuisineName = "Nancy's";
+
+      //Act
+      testCuisine.Update(newCuisineName);
+
+      string result = testCuisine.GetName();
+
+      //Assert
+      Assert.Equal(newCuisineName, result);
+    }
 
     public void Dispose()
     {

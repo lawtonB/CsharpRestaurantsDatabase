@@ -142,5 +142,41 @@ namespace FavoriteRestaurants
       }
       return foundCuisine;
     }
+
+    public void Update(string newCuisine)
+    {
+      SqlConnection conn = DB.Connection();
+      SqlDataReader rdr = null;
+      conn.Open();
+
+      SqlCommand cmd = new SqlCommand("UPDATE cuisines SET cuisine_type = @NewCuisine OUTPUT INSERTED.cuisine_type WHERE id = @CuisineId;", conn);
+
+      SqlParameter newCuisineParameter = new SqlParameter();
+      newCuisineParameter.ParameterName = "@NewCuisine";
+      newCuisineParameter.Value = newCuisine;
+      cmd.Parameters.Add(newCuisineParameter);
+
+
+      SqlParameter cuisineIdParameter = new SqlParameter();
+      cuisineIdParameter.ParameterName = "@CuisineId";
+      cuisineIdParameter.Value = this.GetId();
+      cmd.Parameters.Add(cuisineIdParameter);
+      rdr = cmd.ExecuteReader();
+
+      while(rdr.Read())
+      {
+        this._name = rdr.GetString(0);
+      }
+
+      if (rdr != null)
+      {
+        rdr.Close();
+      }
+
+      if (conn != null)
+      {
+        conn.Close();
+      }
+    }
   }
 }
