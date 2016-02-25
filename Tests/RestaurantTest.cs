@@ -10,7 +10,7 @@ namespace FavoriteRestaurants
   {
     public RestaurantTest()
     {
-      DBConfiguration.ConnectionString = "Data Source=(localdb)\\mssqllocaldb;Initial Catalog=restaurant_test;Integrated Security=SSPI;";
+      DBConfiguration.ConnectionString = "Data Source=(localdb)\\mssqllocaldb;Initial Catalog=restaurantsByCuisine_test;Integrated Security=SSPI;";
     }
 
     public void Dispose()
@@ -32,8 +32,8 @@ namespace FavoriteRestaurants
     public void Test_Equal_ReturnsTrueIfNameIsTheSame()
     {
       //Arrange, Act
-      Restaurant Restaurant1 = new Restaurant("Larrys Hoagies",1);
-      Restaurant Restaurant2 = new Restaurant("Larrys Hoagies",1);
+      Restaurant Restaurant1 = new Restaurant("Larrys Hoagies",1,"awesome hoagies", 5555555);
+      Restaurant Restaurant2 = new Restaurant("Larrys Hoagies",1,"awesome hoagies", 5555555);
 
       //Assert
       Assert.Equal(Restaurant1.GetName(), Restaurant2.GetName());
@@ -43,7 +43,7 @@ namespace FavoriteRestaurants
     public void Test_Save_SavesToDatabase()
     {
       //Arrange
-      Restaurant testRestaurant = new Restaurant("Larrys Hoagies",1);
+      Restaurant testRestaurant = new Restaurant("Larrys Hoagies",1,"awesome hoagies", 5555555);
 
       //Act
       testRestaurant.Save();
@@ -57,14 +57,14 @@ namespace FavoriteRestaurants
     public void Test_Save_AssignsIdToObject()
     {
       //Arrange
-      Restaurant testRestaurant = new Restaurant("larrys Hoagies",1);
+      Restaurant testRestaurant = new Restaurant("larrys Hoagies",1, "awesome hoagies", 5555555);
 
       //Act
       testRestaurant.Save();
       Restaurant savedRestaurant = Restaurant.GetAll()[0];
 
       int result = savedRestaurant.GetCuisineId();
-      int testId = testRestaurant.GetId();
+      int testId = testRestaurant.GetCuisineId();
 
       //Assert
       Assert.Equal(testId, result);
@@ -73,7 +73,7 @@ namespace FavoriteRestaurants
     public void Test_Find_FindsRestaurantInDatabase()
     {
       //Arrange
-      Restaurant testRestaurant = new Restaurant("Larrys Hoagies",1);
+      Restaurant testRestaurant = new Restaurant("Larrys Hoagies",1, "awesome hoagies", 5555555);
       testRestaurant.Save();
 
       //Act

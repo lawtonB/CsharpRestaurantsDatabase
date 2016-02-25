@@ -9,12 +9,16 @@ namespace FavoriteRestaurants
     private int _id;
     private string _name;
     private int _cuisineId;
+    private string _description;
+    private int _phoneNumber;
 
-    public Restaurant(string Name, int CuisineId, int Id = 0)
+    public Restaurant(string Name, int CuisineId, string Description, int PhoneNumber, int Id = 0)
     {
       _id = Id;
       _name = Name;
       _cuisineId = CuisineId;
+      _description = Description;
+      _phoneNumber = PhoneNumber;
     }
     public override bool Equals(System.Object otherRestaurant)
     {
@@ -49,6 +53,15 @@ namespace FavoriteRestaurants
       return _cuisineId;
     }
 
+    public string GetDescription()
+    {
+      return _description;
+    }
+    public int GetPhoneNumber()
+    {
+      return _phoneNumber;
+    }
+
     public static void DeleteAll()
     {
       SqlConnection conn = DB.Connection();
@@ -63,7 +76,7 @@ namespace FavoriteRestaurants
       SqlDataReader rdr = null;
       conn.Open();
 
-      SqlCommand cmd = new SqlCommand("INSERT INTO restaurants (name, cuisine_id) OUTPUT INSERTED.id VALUES (@RestaurantName, @CuisineId);", conn);
+      SqlCommand cmd = new SqlCommand("INSERT INTO restaurants (name, cuisine_id, description, phone_number) OUTPUT INSERTED.id VALUES (@RestaurantName, @CuisineId, @Description, @PhoneNumber);", conn);
 
       SqlParameter NameParameter = new SqlParameter();
       NameParameter.ParameterName = "@RestaurantName";
@@ -75,6 +88,16 @@ namespace FavoriteRestaurants
       CuisineIdParameter.ParameterName = "@CuisineId";
       CuisineIdParameter.Value = this.GetCuisineId();
       cmd.Parameters.Add(CuisineIdParameter);
+
+      SqlParameter DescriptionParameter = new SqlParameter();
+      DescriptionParameter.ParameterName = "@Description";
+      DescriptionParameter.Value = this.GetDescription();
+      cmd.Parameters.Add(DescriptionParameter);
+
+      SqlParameter PhoneNumberParameter = new SqlParameter();
+      PhoneNumberParameter.ParameterName = "@PhoneNumber";
+      PhoneNumberParameter.Value = this.GetPhoneNumber();
+      cmd.Parameters.Add(PhoneNumberParameter);
 
       rdr = cmd.ExecuteReader();
 
@@ -108,7 +131,9 @@ namespace FavoriteRestaurants
         int RestaurantId = rdr.GetInt32(0);
         string RestaurantName = rdr.GetString(1);
         int newCuisineId = rdr.GetInt32(2);
-        Restaurant newRestaurant = new Restaurant(RestaurantName, RestaurantId, newCuisineId);
+        string newDescription = rdr.GetString(3);
+        int newPhoneNumber = rdr.GetInt32(4);
+        Restaurant newRestaurant = new Restaurant(RestaurantName, newCuisineId, newDescription, newPhoneNumber, RestaurantId);
         allRestaurants.Add(newRestaurant);
       }
       if (rdr != null)
@@ -136,13 +161,19 @@ namespace FavoriteRestaurants
       rdr = cmd.ExecuteReader();
 
       int foundRestaurantId = 0;
-      string foundRestaurantDescription = null;
+      string foundName = null;
+      string foundDescription = null;
+      int foundPhoneNumber = 0;
+      int foundCuisineId = 0;
       while(rdr.Read())
       {
         foundRestaurantId = rdr.GetInt32(0);
-        foundRestaurantDescription = rdr.GetString(1);
+        foundName = rdr.GetString(1);
+        foundCuisineId = rdr.GetInt32(2);
+        foundDescription = rdr.GetString(3);
+        foundPhoneNumber = rdr.GetInt32(4);
       }
-      Restaurant foundRestaurant = new Restaurant(foundRestaurantDescription, foundRestaurantId);
+      Restaurant foundRestaurant = new Restaurant(foundName, foundCuisineId, foundDescription, foundPhoneNumber,  foundRestaurantId);
 
       if (rdr != null)
       {
