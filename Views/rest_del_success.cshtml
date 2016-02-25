@@ -1,6 +1,9 @@
 <ol>
 @foreach (var restaurant in @Model)
 {
-  <li>@restaurant.GetName() | <a href="/restaurant/delete/@restaurant.GetId()">delete this</a></li>
+  <form class="" action="/restaurant/delete/@restaurant.GetId()" method="post">
+    <input type="hidden" name="_method" value="DELETE">
+    <li>@restaurant.GetName() <button type="submit" name="button">destroy</button></li>
+  </form>
 }
 </ol>

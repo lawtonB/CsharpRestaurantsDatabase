@@ -4,9 +4,14 @@
 <br>
 <p>Enter your favorite @Model.GetName() restaurants!</p>
 
-<form class="restaurant" action="/add_eats" method="post">
+<form class="restaurant" action="/rest_results" method="post">
   <input type="hidden" name="cuisine_id" value="@Model.GetId()">
+  <p>add name</p>
   <input type="text" name="restaurant">
+  <p>add description</p>
+  <input type="text" name="description">
+  <p>add phone number</p>
+  <input type="number" name="phone_number">
   <button type="submit" name="button">add new restaurant</button>
 </form>
 

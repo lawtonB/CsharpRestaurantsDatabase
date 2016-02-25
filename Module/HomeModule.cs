@@ -24,11 +24,11 @@ namespace FavoriteRestaurants
         return View["index.cshtml"];
       };
 
-      Post["/add_eats/"] = _ => {
+      Post["/rest_results"] = _ => {
         Restaurant newRestaurant = new Restaurant(Request.Form["restaurant"], Request.Form["cuisine_id"], Request.Form["description"], Request.Form["phone_number"]);
         newRestaurant.Save();
-        List<Restaurant> allRestaurants = Restaurant.GetAll();
-        return View["rest_results.cshtml", allRestaurants];
+        List<Restaurant> FoundRestaurants = Restaurant.GetByCuisineId(Request.Form["cuisine_id"]);
+        return View["rest_results.cshtml", FoundRestaurants];
       };
 
       Get["cuisine/edit/{id}"] = parameters => {
@@ -47,6 +47,23 @@ namespace FavoriteRestaurants
       SelectedRestaurant.Delete();
       List<Restaurant> allRestaurants = Restaurant.GetAll();
       return View["rest_del_success.cshtml", allRestaurants];
+      };
+
+      Get["/cuisine_delete/{id}"] = parameters => {
+        Cuisine SelectedCuisine = Cuisine.Find(parameters.id);
+        return View["are_you_sure.cshtml", SelectedCuisine];
+      };
+
+      Delete["/cuisine_delete/{id}"] = parameters => {
+        Cuisine SelectedCuisine = Cuisine.Find(parameters.id);
+        SelectedCuisine.Delete();
+        List<Cuisine> allCuisines = Cuisine.GetAll();
+        return View["cuisines.cshtml", allCuisines];
+      };
+
+      Get["/show_all"] = _ => {
+        List<Cuisine> allCuisines = Cuisine.GetAll();
+        return View["cuisines.cshtml", allCuisines];
       };
 
     }

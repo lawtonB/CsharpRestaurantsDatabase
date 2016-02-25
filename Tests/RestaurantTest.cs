@@ -94,5 +94,21 @@ namespace FavoriteRestaurants
       //Assert
       Assert.Equal(0, result);
     }
+    [Fact]
+    public void Test_GetByCuisine_GetAllRestaurantsInDatabaseByCuisine()
+    {
+      //Arrange
+      Restaurant testRestaurant = new Restaurant("Larrys Greek",2, "greek food", 5555555);
+      testRestaurant.Save();
+      Restaurant otherTestRestaurant = new Restaurant("Provencia",2, "better greek food", 7565679);
+      testRestaurant.Save();
+      otherTestRestaurant.Save();
+      List<Restaurant> foundRestaurants = Restaurant.GetByCuisineId(2);
+      //Act
+      int firstId = foundRestaurants[0].GetCuisineId();
+      int secondId = foundRestaurants[1].GetCuisineId();
+      //Assert
+      Assert.Equal(firstId, secondId);
+    }
   }
 }

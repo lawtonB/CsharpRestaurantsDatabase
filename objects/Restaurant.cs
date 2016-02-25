@@ -191,10 +191,10 @@ namespace FavoriteRestaurants
       SqlConnection conn = DB.Connection();
       conn.Open();
 
-      SqlCommand cmd = new SqlCommand("DELETE FROM cuisines WHERE id = @CuisineId; DELETE FROM restaurants WHERE cuisine_id = @CuisineId;", conn);
+      SqlCommand cmd = new SqlCommand("DELETE FROM restaurants WHERE id = @Id;", conn);
 
       SqlParameter cuisineIdParameter = new SqlParameter();
-      cuisineIdParameter.ParameterName = "@CuisineId";
+      cuisineIdParameter.ParameterName = "@Id";
       cuisineIdParameter.Value = this.GetId();
 
       cmd.Parameters.Add(cuisineIdParameter);
@@ -204,6 +204,46 @@ namespace FavoriteRestaurants
       {
         conn.Close();
       }
+    }
+
+    public static List<Restaurant> GetByCuisineId(int cuisineId)
+    {
+      SqlConnection conn = DB.Connection();
+      SqlDataReader rdr = null;
+      conn.Open();
+
+      SqlCommand cmd = new SqlCommand("SELECT * FROM restaurants WHERE cuisine_id = @CuisineId;", conn);
+
+      SqlParameter cuisineIdParameter = new SqlParameter();
+      cuisineIdParameter.ParameterName = "@CuisineId";
+      cuisineIdParameter.Value = cuisineId;
+
+      cmd.Parameters.Add(cuisineIdParameter);
+      rdr = cmd.ExecuteReader();
+
+      List<Restaurant> FoundRestaurants = new List<Restaurant>{};
+
+      while(rdr.Read())
+      {
+        int RestaurantId = rdr.GetInt32(0);
+        string RestaurantName = rdr.GetString(1);
+        int newCuisineId = rdr.GetInt32(2);
+        string newDescription = rdr.GetString(3);
+        int newPhoneNumber = rdr.GetInt32(4);
+        Restaurant newRestaurant = new Restaurant(RestaurantName, newCuisineId, newDescription, newPhoneNumber, RestaurantId);
+        FoundRestaurants.Add(newRestaurant);
+      }
+      if (rdr != null)
+      {
+        rdr.Close();
+      }
+      if (conn != null)
+      {
+        conn.Close();
+      }
+
+      return FoundRestaurants;
+
     }
   }
 }

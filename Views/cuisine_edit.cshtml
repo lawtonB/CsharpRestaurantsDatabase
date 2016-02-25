@@ -1,4 +1,4 @@
-<h1>Cuisine Type Editor</h1>
+<h1>Cuisine Editor</h1>
 <hr />
 <h2>Edit cuisine: @Model.GetName()</h2>
 <form action="/cuisine/edit/@Model.GetId()" method="post">
@@ -8,4 +8,5 @@
   <input id="cuisine-name" name="cuisine-name" type="text">
   <button type="submit">Submit</button>
 </form>
+<h4><a href="/cuisine_delete/@Model.GetId()" name="_method" value="DELETE">Delete this cuisine and all restaurants within</a>
 <h4><a href="/">Return home</a></h4>

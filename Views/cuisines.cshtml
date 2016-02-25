@@ -1,0 +1,6 @@
+<ol>
+  @foreach(var cuisine in @Model)
+  {
+    <li><a href="/cuisine/edit/@cuisine.GetId()">@cuisine.GetName()</a></li>
+  }
+</ol>
